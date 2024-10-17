@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import anh.nguyen.alovestory.entities.Post;
+import anh.nguyen.alovestory.entities.User;
 import anh.nguyen.alovestory.repositories.PostRepository;
 import anh.nguyen.alovestory.repositories.UserRepository;
 
@@ -29,6 +30,9 @@ public class PostService {
     }
     public List<Post> getAllPost(){
         return postRepository.findAll();
+    }
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
     }
     public boolean postExistById(Long postId){
         if(postRepository.existsById(postId)){

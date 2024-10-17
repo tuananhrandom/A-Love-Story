@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import anh.nguyen.alovestory.entities.Comment;
+import anh.nguyen.alovestory.entities.Post;
 import anh.nguyen.alovestory.repositories.CommentRepository;
 import anh.nguyen.alovestory.repositories.PostRepository;
 
@@ -16,6 +17,9 @@ public class CommentService {
     public boolean createComment(Comment comment){
         if(!commentRepository.existsById(comment.getCommentId())){
             commentRepository.save(comment);
+            Post thisPost = comment.getPost();
+            Long thisPostId=thisPost.getPostId();
+            addCommentCountToPost(thisPostId);
             return true;
         }
         else{
@@ -31,5 +35,30 @@ public class CommentService {
     }
     public List<Comment> findAllComments(){
         return commentRepository.findAll();
-    }    
+    }
+    public boolean commentExist(Long commentId){
+        if(commentRepository.existsById(commentId)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    // khi một bình có một bình luận mới, hàm này sẽ được gọi
+    //và thêm một số đếm cho comment nằm trong post này
+    public void addCommentCountToPost(Long postId){
+        if(postRepository.existsById(postId)){
+            Post post = postRepository.findById(postId).get();
+            Integer newCommentCount = post.getCommentCount() + 1;
+            post.setCommentCount(newCommentCount);
+        }
+    }
+    //khi xóa bình luận thì ta có thể giảm bớt một comment
+    public void subCommentCountToPost(Long postId){
+        if(postRepository.existsById(postId)){
+            Post post = postRepository.findById(postId).get();
+            Integer newCommentCount = post.getCommentCount() -1 ;
+            post.setCommentCount(newCommentCount);
+        }
+    }
+
 }

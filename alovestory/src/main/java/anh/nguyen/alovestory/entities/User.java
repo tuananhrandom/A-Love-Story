@@ -28,7 +28,10 @@ public class User {
     private String avatar;
     @Column(name = "name", nullable = false, unique = false)
     private String name;
-        // Mối quan hệ OneToMany với Post
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> posts;
+    @Column(name = "unreadNoti", nullable = false, unique = false)
+    private Integer unreadNoti = 0;
+    @Column (name = "unreadMess", nullable = false, unique = false)
+    private Integer unreadMess = 0; 
 }
