@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 import anh.nguyen.alovestory.entities.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> { 
-    List<Post> findAllByOrderByPostDateTimeAsc();
+    List<Post> findAllByOrderByCreatedAtAsc();
 }

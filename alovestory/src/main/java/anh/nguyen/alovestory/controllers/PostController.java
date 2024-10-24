@@ -18,29 +18,34 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 @RestController
 @RequestMapping("/post")
 public class PostController {
     private static String UPLOAD_DIR = "uploads/";
+
     @Autowired
     PostService postService;
+
     @GetMapping("/all")
     public List<Post> getAllPost() {
         return postService.getAllPost();
     }
+
     @DeleteMapping("/delete/{postId}")
-    public ResponseEntity<?> deletePost(@RequestParam Long postId){
-        if(postService.postExistById(postId)){
+    public ResponseEntity<?> deletePost(@RequestParam Long postId) {
+        if (postService.postExistById(postId)) {
             postService.deletePost(postId);
-            return new ResponseEntity<>("Delete Complete",HttpStatus.OK);
-        }else{
+            return new ResponseEntity<>("Delete Complete", HttpStatus.OK);
+        } else {
             return new ResponseEntity<>("Delete Failed", HttpStatus.BAD_REQUEST);
         }
     }
-        @PostMapping("/new")
-public ResponseEntity<?> newPost(@RequestParam("postCaption") String postCaption, 
-                                     @RequestParam("userId") Long userId,
-                                     @RequestParam("file") MultipartFile file) {
+
+    @PostMapping("/new")
+    public ResponseEntity<?> newPost(@RequestParam("postCaption") String postCaption,
+            @RequestParam("userId") Long userId,
+            @RequestParam("file") MultipartFile file) {
         try {
             // Lưu file lên server
             String fileName = saveFile(file);
@@ -51,7 +56,7 @@ public ResponseEntity<?> newPost(@RequestParam("postCaption") String postCaption
             post.setUser(postService.findUserById(userId));
             post.setPostMedia(fileName); // Lưu đường dẫn của file vào DB
             post.setCreatedAt(LocalDateTime.now());
-            post.setPostLiked(0);
+            post.setLikeCount(0);
             post.setCommentCount(0);
 
             boolean created = postService.createNewPost(post);
@@ -77,7 +82,7 @@ public ResponseEntity<?> newPost(@RequestParam("postCaption") String postCaption
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath);
 
-        // Trả về tên file để lưu vào DB
+        // Trả về tên file để lưu vào DBss
         return fileName;
     }
 }

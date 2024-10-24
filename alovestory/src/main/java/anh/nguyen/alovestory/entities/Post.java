@@ -32,8 +32,8 @@ public class Post {
     private User user;
     @Column(name="createdAt", nullable = false)
     private LocalDateTime createdAt;
-    @Column(name="postLiked", nullable = false, unique =false)
-    private Integer postLiked = 0;
+    @Column(name="likeCount", nullable = false, unique =false)
+    private Integer likeCount = 0;
     @Column(name = "commentCount", nullable = false)
-    private Integer commentCount; 
+    private Integer commentCount = 0; 
 }

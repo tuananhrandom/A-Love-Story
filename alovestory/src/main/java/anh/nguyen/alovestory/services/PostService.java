@@ -14,6 +14,7 @@ import anh.nguyen.alovestory.repositories.UserRepository;
 public class PostService {
     @Autowired
     PostRepository postRepository;
+    @Autowired
     UserRepository userRepository;
     public boolean createNewPost(Post post){
         if(!postRepository.existsById(post.getPostId())){
@@ -29,7 +30,7 @@ public class PostService {
         postRepository.deleteById(postId);
     }
     public List<Post> getAllPost(){
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtAsc();
     }
     public User findUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));

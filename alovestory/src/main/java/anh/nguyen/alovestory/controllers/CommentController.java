@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CommentController {
     @Autowired
     PostService postService;
+    @Autowired
     CommentService commentService;
 
     @GetMapping("/getPostComment/{postId}")
