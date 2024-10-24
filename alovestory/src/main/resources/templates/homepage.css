@@ -1,0 +1,66 @@
+body {
+    font-family: Playfair Display;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    background-color: #B9E0E9;
+}
+.container{
+    margin: 0 auto;
+    width: 440px;
+    height: 956px;
+    background-color: antiquewhite;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #D5E3B6;
+    padding: 0px;
+    width:440px;
+    height: 91px;
+}
+.header h1 {
+    margin: 0px;
+    font-size: 24px;
+    opacity: 0.7;
+    
+}
+
+.header-left{
+    float: left;
+
+}
+.header-center{
+    align-items: center;
+    /* left:-60px; */
+
+    
+}
+.header-right{
+
+    
+}
+.control{
+    padding:10px;
+}
+
+.control img{
+    width: 25px;
+    height: 25px;
+}
+.control.user img{
+    border-radius: 30px;
+}
+.main{
+    background-color: aliceblue;
+    width: 440px;
+    height: 896px;
+    background-image: url('picture/background-home.jpg'); /* Đường dẫn đến hình ảnh */
+    background-size: cover; /* Đảm bảo hình ảnh phủ toàn bộ background */
+    background: position 200px; /* Căn giữa hình ảnh */
+    background-repeat: no-repeat; /* Không lặp lại hình ảnh */
+}
+
