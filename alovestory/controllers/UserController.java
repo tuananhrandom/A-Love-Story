@@ -34,10 +34,16 @@ public class UserController {
         return new ResponseEntity<>("Delete Complete", HttpStatus.OK);
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<?> newUser(@RequestBody User user) {
-        userService.createNewUser(user);
-        return new ResponseEntity<>("Created", HttpStatus.OK);
+    @PostMapping("/register")
+    public ResponseEntity<?> newUser(@RequestBody User newUser) {
+        try {
+            userService.createNewUser(newUser);
+            return new ResponseEntity<>("Created User", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Create Failed", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }

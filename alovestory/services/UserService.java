@@ -2,6 +2,7 @@ package anh.nguyen.alovestory.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import anh.nguyen.alovestory.entities.User;
@@ -11,6 +12,21 @@ import anh.nguyen.alovestory.repositories.UserRepository;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    public void updatePassword(Long userId, String newPassword) {
+        User existingUser = userRepository.findById(userId).orElse(null);
+
+        if (existingUser != null) {
+            // Encode the new plain-text password
+            existingUser.setPassword(passwordEncoder.encode(newPassword));
+
+            // Save the updated user back to the database
+            userRepository.save(existingUser);
+        }
+    }
 
     public void changeFullName(Long userId, String fullName) {
         if (userRepository.existsById(userId)) {
@@ -24,7 +40,11 @@ public class UserService {
     }
 
     public void createNewUser(User user) {
-        userRepository.save(user);
+        User thisUser = user;
+        String encodedPassword = passwordEncoder.encode(thisUser.getPassword());
+        thisUser.setPassword(encodedPassword);
+        userRepository.save(thisUser);
+        System.out.println("new user created");
     }
 
     public boolean Login(String username, String password) {
