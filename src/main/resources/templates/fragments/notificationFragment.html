@@ -1,0 +1,17 @@
+<div th:fragment="notificationFragment">
+    <div class="notification-item" th:each="notification : ${notifications}"
+        th:attr="data-notification-id=${notification.notificationId}"
+        th:attrappend="data-post-id=${notification.post.postId}"
+        th:classappend="${notification.isRead} ? 'notification-read' : 'notification-unread'">
+        <div class="image-placeholder">
+            <img class="notification-image" th:src="@{${notification.notificationImage}}" alt="Image">
+        </div>
+        <div class="notification-content">
+            <p class="notification-title" th:text="${notification.notificationTitle}"></p>
+            <p class="notification-text"
+                th:text="${notification.notificationContent} +'  '+${notification.timeCreate}+'-'+${notification.dateCreate}">
+            </p>
+        </div>
+        <button id="notification-delete" class="delete-btn">✖</button>
+    </div>
+</div>

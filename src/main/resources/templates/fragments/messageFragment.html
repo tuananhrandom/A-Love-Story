@@ -1,0 +1,18 @@
+<div th:fragment="messageFragment" th:each="message : ${messages}" class="message-item" th:attr="data-message-id=${message.messageId}">
+            
+    <div class="message-text" th:text="${message.messageText}"></div>
+    <div th:if="${message.messageMediaType == 'jpeg' or message.messageMediaType == 'png'}">
+        <img th:src="@{'/uploads/messages' + ${message.messageMedia}}" alt="media">
+    </div>
+
+    <div th:if="${message.messageMediaType == 'mp4'}">
+        <video th:src="@{'/uploads/messages' + ${message.messageMedia}}" controls></video>
+    </div>
+    <div th:if="${message.messageMediaType == null}">
+        <!-- Khối div trống -->
+    </div>
+    <div class="message-time">
+        <span th:text="message.dateCreate"></span>
+        <span th:text="message.timeCreate"></span>
+    </div>
+</div>

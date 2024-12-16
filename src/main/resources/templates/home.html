@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/homepage.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" th:src="@{js/home.js}"></script>
+    <title>A Love Story</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <span id="page_message" class="control message">
+                    <img th:src="@{images/mess.png}" alt="Messenger Icon">
+                </span>
+                <span id="page_findpost" class="control findpost">
+                    <img th:src="@{images/find.png}" alt="findpost">
+                </span>
+            </div>
+            <div class="header-center">
+                <h1>ALOVESTORY</h1>
+            </div>
+            <div class="header-right">
+                <div class="header_notification_grp">
+                    <span id="page_notification" class="control notification">
+                        <img th:src="@{images/bell.png}" alt="notification">
+                    </span>
+                    <span th:if="${currentUser.unreadNoti != null and currentUser.unreadNoti > 0}"
+                        class="unreadNoti">🔴<span class="unreadNotiCount"
+                            th:text="${currentUser.unreadNoti}"></span></span>
+                    <span th:if="${currentUser.unreadNoti == 0}" class="unreadNoti"></span>
+                    <span id="page_user" class="control user" th:attr="data-user-id=${currentUser.userId}"
+                        th:attrappend="data-user-name=${currentUser.name}">
+                        <img th:src="@{${currentUser.avatar}}" alt="user">
+                    </span>
+                    <div class="notification-popup">
+                        <div class="header">
+                            <h2>Notifications</h2>
+                            <button id="notification-delete-all" class="delete-btn delete-all">Delete All</button>
+                        </div>
+                        <div class="notification-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="main" class="main">
+            <div class="main popup">
+                <span id="close_button" class="close_button">✖</span>
+                <div class="contentContainer"></div>
+            </div>
+        </div>
+        <div class="sticky_wrapper">
+            <div class="control newpost">
+                <img th:src="@{images/newpost.png}" alt="newpost">
+            </div>
+        </div>
+        <div id="popup-overlay" class="popup-overlay"></div>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h2>New Post</h2>
+                </div>
+                <div id="popup-body" class="popup-body">
+                    <textarea id="popup_caption" placeholder="Bạn Nghĩ gì?" rows="3"></textarea>
+                    <label for="post_media" class="upload-label">Thêm ảnh/video</label>
+                    <input id="post_media" type="file" accept="image/*,video/*" class="upload-input">
+                </div>
+                <div class="popup-footer">
+                    <button id="cancelButton">Cancel</button>
+                    <button id="postButton">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

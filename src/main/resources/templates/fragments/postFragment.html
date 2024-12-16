@@ -1,0 +1,86 @@
+<div th:each="post : ${post}" class="post" th:attr="data-id=${post.postId}"
+    th:fragment="postFragment(post, currentUserId)">
+    <div class="post_header">
+        <span class="post control user" th:attr="data-user-id=${post.user.userId}">
+            <img th:src="@{${post.user.avatar}}" alt="user">
+        </span>
+        <span class="post username" th:text="${post.user.name}"></span>
+        <span class="post date_create" th:text="${post.dateCreate}"></span>
+        <span class="post time_create" th:text="${post.timeCreate}"></span>
+    </div>
+    <div class="post_body">
+        <div  class="post caption" th:text="${post.postCaption}">
+        </div>
+    </div>
+    <div class="post media">
+        <div th:if="${post.postMediaType == 'jpeg' or post.postMediaType == 'png'}">
+            <img th:src="@{'/uploads/' + ${post.postMedia}}" alt="media">
+        </div>
+
+        <div th:if="${post.postMediaType == 'mp4'}">
+            <video th:src="@{'/uploads/' + ${post.postMedia}}" controls></video>
+        </div>
+        <div th:if="${post.postMediaType == null}">
+            <!-- Khối div trống -->
+        </div>
+    </div>
+    <div class="post_bottom">
+        <div class="post_reaction">
+            <span  th:if="${post.likeCount == 0}" class="control like">
+                <img src="images/nolike.png" alt="like">
+                <span th:text="${post.likeCount}">0</span>
+            </span>
+            <span  th:if="${post.likeCount>0}" class="control like">
+                <img src="images/like.png" alt="like">
+                <span th:text="${post.likeCount}"></span>
+            </span>
+            <span  th:if="${post.commentCount == 0}" class="control comment">
+                <img src="images/comment.png" alt="comment">
+                <span th:text="${post.commentCount}"></span>
+            </span>
+            <span  th:if="${post.commentCount > 0}" class="control comment">
+                <img src="images/comment.png" alt="comment">
+                <span th:text="${post.commentCount}"></span>
+            </span>
+            <div th:if="${post.user.userId == currentUserId}" class="post_edit_options">
+                <div class="popup_edit">
+                    <button class="control delete">❌ Xóa bài</button>
+                </div>
+                <span  class="control edit">
+                    <img src="images/edit.png" alt="edit">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="post_comment_area">
+        <!-- Tạo khối chứa comment với thanh cuộn -->
+        <div class="comment_scroll_area">
+            <div
+                th:with="postComments=${post != null and commentsByPostId != null and commentsByPostId.containsKey(post.postId) ? commentsByPostId[post.postId] : null}">
+                <!-- Kiểm tra nếu danh sách comments không rỗng và duyệt qua các comment -->
+                <div th:if="${postComments != null and !#lists.isEmpty(postComments)}"
+                    th:each="comment : ${postComments}" class="comment">
+                    <!-- Hiển thị thông tin người dùng và thời gian bình luận -->
+                    <div class="comment_header">
+                        <span class="post control user">
+                            <img th:src="@{${comment.user.avatar}}" alt="user" class="comment_avatar">
+                        </span>
+                        <span class="comment_username" th:text="${comment.user.name}"></span>
+                        <span class="comment_date" th:text="${comment.dateCreate}"></span>
+                        <span class="comment_time" th:text="${comment.timeCreate}"></span>
+                    </div>
+                    <!-- Nội dung bình luận -->
+                    <div class="comment_content" th:text="${comment.commentText}">
+                        <!-- Nội dung của comment sẽ được hiển thị ở đây -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khu vực thêm bình luận mới nằm ngoài khối cuộn -->
+        <div class="new_comment_area">
+            <textarea id="comment_content" placeholder="Viết bình luận" rows="2"></textarea>
+            <img id="comment-send" class="control send" th:src="@{images/send.png}" alt="send icon">
+        </div>
+    </div>
+</div>

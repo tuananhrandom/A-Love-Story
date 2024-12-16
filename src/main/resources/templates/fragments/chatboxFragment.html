@@ -1,0 +1,16 @@
+<div class="chat-wrapper" th:fragment = "chatboxFragment(sender, recipient)">
+    <div class = "chat-header">
+        <span class = "chat control user" th:attr="data-recipient-id=${recipient.userId}">
+            <img src="@{${recipient.avatar}}" alt="user">
+        </span>
+        <span class ="chat username" th:text="${recipient.name}"></span>
+    </div>
+    <div class = "chat-body"></div>
+    <div class = "chat-foot">
+        <div class="new_comment_area chatbox">
+            <img src="@{images/attach.png}" alt="attach">
+            <textarea placeholder="Bạn muốn nói gì?" rows="2"></textarea>
+            <img class="control send" th:src="@{images/send.png}" alt="send icon" th:attr="data-sender-id=${sender.userId}">
+        </div>
+    </div>
+</div>
