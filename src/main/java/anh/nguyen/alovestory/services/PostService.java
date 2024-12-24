@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+import java.util.UUID;
 import anh.nguyen.alovestory.entities.Post;
 import anh.nguyen.alovestory.entities.User;
 import anh.nguyen.alovestory.repositories.PostRepository;
@@ -42,7 +42,7 @@ public class PostService {
         }
 
         // Tạo tên file và lưu vào thư mục
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString() +"."+file.getContentType().split("/")[1];// file type không null được vì đã kiểm tra từ controller
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath);
 

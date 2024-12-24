@@ -58,14 +58,13 @@ public class PostController {
 
             // Only process the file if it's provided
             if (file != null && !file.isEmpty()) {
-                fileName = postService.saveFile(file);
                 String fileType = file.getContentType();
                 if (fileType != null) {
+                    fileName = postService.saveFile(file);
                     postMediaType = fileType.split("/")[1];
                 } else {
                     System.err.println("Cannot get file type");
                 }
-
             }
 
             // Create new post

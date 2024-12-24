@@ -13,5 +13,5 @@ public class NotificationDTO {
     private Long actorId; // ID of the user who sends the notification
     private Long recipientId; // ID of the user who receives the notification
     private Boolean isRead;
-    private Long partnerId;
+    // private Long partnerId;
 }

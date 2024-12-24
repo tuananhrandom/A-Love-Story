@@ -66,6 +66,7 @@ public class NotificationService {
             notification.setPost(post);
         }
         notificationRepository.save(notification);
+        
 
     }
 
